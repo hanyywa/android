@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/translate_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,41 +29,75 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _index = 0;
 
-  final pages = [
-    const HomePage(),
-    const TranslatePage(),
-    const ArtikelPage(),
-  ];
+  void _navigateToTranslate(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const TranslatePage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      HomePage(onNavigateTranslate: () => _navigateToTranslate(context)),
+      const PlaceholderPage(label: 'Belajar'),
+      const ArtikelPage(),
+    ];
+
     return Scaffold(
       body: pages[_index],
-      bottomNavigationBar: const CustomNavigationBarWrapper(),
+      bottomNavigationBar: CustomNavigationBarWrapper(
+        currentIndex: _index,
+        onTap: (i) => setState(() => _index = i),
+      ),
     );
   }
 }
 
-class CustomNavigationBarWrapper extends StatelessWidget {
-  const CustomNavigationBarWrapper({super.key});
+class PlaceholderPage extends StatelessWidget {
+  final String label;
+
+  const PlaceholderPage({super.key, required this.label});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.only(bottom: 12), 
-      child: SafeArea(
-        top: false,
-        child: CustomNavigationBar(
-          currentIndex: 0, // nanti override dari parent
-          onTap: (_) {},
+    return Scaffold(
+      body: Center(
+        child: Text(
+          label,
+          style: const TextStyle(fontSize: 24, color: Colors.grey),
         ),
       ),
     );
   }
 }
 
-//// COMPONENTS
+class CustomNavigationBarWrapper extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTap;
+
+  const CustomNavigationBarWrapper({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.only(bottom: 12),
+      child: SafeArea(
+        top: false,
+        child: CustomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: onTap,
+        ),
+      ),
+    );
+  }
+}
+
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
 
@@ -99,53 +134,68 @@ class CustomAppBar extends StatelessWidget {
 }
 
 class Section2 extends StatelessWidget {
-  const Section2({super.key});
+  final VoidCallback onNavigate;
+
+  const Section2({super.key, required this.onNavigate});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Container(
-        height: 200,
-        decoration: BoxDecoration(
-          color: const Color(0xFFC6C6C6),
-          borderRadius: BorderRadius.circular(24),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 4,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(width: 107), // Space for image
-                const Text(
-                  'Terjemahkan',
-                  style: TextStyle(
-                    color: Color(0xFF272727),
-                    fontSize: 22,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w600,
-                    height: 1.27,
-                  ),
+      child: GestureDetector(
+        onTap: onNavigate,
+        child: Container(
+          height: 200,
+          decoration: BoxDecoration(
+            color: const Color(0xFF2196F3),
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.2),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Mulai Terjemahkan',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.bold,
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 48,
-                    height: 48,
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Tekan untuk membuka kamera dan menerjemahkan isyarat tangan secara real-time',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: 56,
+                    height: 56,
                     decoration: const BoxDecoration(
+                      color: Colors.white,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.arrow_forward, size: 24),
+                    child: const Icon(Icons.camera_alt, color: Color(0xFF2196F3), size: 28),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -171,7 +221,7 @@ class Section5 extends StatelessWidget {
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w400,
                 height: 1.43,
-                letterSpacing: 0.25,                
+                letterSpacing: 0.25,
               ),
             ),
           ),
@@ -181,19 +231,22 @@ class Section5 extends StatelessWidget {
               children: const [
                 ListItemWidget(
                   title: 'Profil Tim Pengembang',
-                  description: 'Tentang tim hibah berdampak Universitas Sebelas Maret #00000',
+                  description:
+                      'Tentang tim hibah berdampak Universitas Sebelas Maret #00000',
                   date: 'Today',
                   readTime: '3 min read',
                 ),
                 ListItemWidget(
                   title: 'Tentang GERKATIN Surakarta',
-                  description: 'Gerakan untuk Kesejahteraan Tunarungu Indonesia',
+                  description:
+                      'Gerakan untuk Kesejahteraan Tunarungu Indonesia',
                   date: 'Today',
                   readTime: '3 min read',
                 ),
                 ListItemWidget(
                   title: 'Mengenal BISINDO Solo',
-                  description: 'Varian dari BISINDO yang dibentuk oleh komunitas tuli Surak...',
+                  description:
+                      'Varian dari BISINDO yang dibentuk oleh komunitas tuli Surak...',
                   date: 'Today',
                   readTime: '3 min read',
                 ),
@@ -233,9 +286,7 @@ class SectionHeader extends StatelessWidget {
             child: Container(
               width: 48,
               height: 48,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-              ),
+              decoration: const BoxDecoration(shape: BoxShape.circle),
               child: const Icon(Icons.arrow_forward, size: 24),
             ),
           ),
@@ -266,7 +317,7 @@ class ListItemWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.white, // Tambah background putih untuk item
+        color: Colors.white,
       ),
       child: Row(
         children: [
@@ -274,7 +325,7 @@ class ListItemWidget extends StatelessWidget {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: const Color(0xFF0000CC), // Blok biru
+              color: const Color(0xFF0000CC),
               borderRadius: BorderRadius.circular(16),
             ),
           ),
@@ -287,7 +338,7 @@ class ListItemWidget extends StatelessWidget {
                   title,
                   style: const TextStyle(
                     color: Color(0xFF111111),
-                    fontSize: 18, // Sesuaikan ukuran
+                    fontSize: 18,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                   ),
@@ -316,10 +367,7 @@ class ListItemWidget extends StatelessWidget {
                     ),
                     const Text(
                       ' • ',
-                      style: TextStyle(
-                        color: Color(0xFF111111),
-                        fontSize: 12,
-                      ),
+                      style: TextStyle(color: Color(0xFF111111), fontSize: 12),
                     ),
                     Text(
                       readTime,
@@ -344,7 +392,11 @@ class CustomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
 
-  const CustomNavigationBar({super.key, required this.currentIndex, required this.onTap});
+  const CustomNavigationBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -387,30 +439,10 @@ class CustomNavigationBar extends StatelessWidget {
   }
 }
 
-class GestureBar extends StatelessWidget {
-  const GestureBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 24,
-      child: Center(
-        child: Container(
-          width: 108,
-          height: 4,
-          decoration: BoxDecoration(
-            color: const Color(0xFF272727),
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-//// HOME 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final VoidCallback onNavigateTranslate;
+
+  const HomePage({super.key, required this.onNavigateTranslate});
 
   @override
   Widget build(BuildContext context) {
@@ -419,11 +451,8 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // App Bar
             const CustomAppBar(),
-            // Section 2: Card Large
-            const Section2(),
-            // Section 5: Artikel
+            Section2(onNavigate: onNavigateTranslate),
             const Section5(),
           ],
         ),
@@ -432,41 +461,6 @@ class HomePage extends StatelessWidget {
   }
 }
 
-//// TRANSLATE 
-class TranslatePage extends StatelessWidget {
-  const TranslatePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Terjemahkan")),
-      body: Column(
-        children: [
-          Container(
-            height: 250,
-            color: Colors.grey,
-            child: const Center(child: Text("Camera Preview")),
-          ),
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              padding: const EdgeInsets.all(16),
-              child: const Text(
-                "Hasil terjemahan akan muncul di sini...",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-//// ARTIKEL LIST 
 class ArtikelPage extends StatelessWidget {
   const ArtikelPage({super.key});
 
@@ -477,7 +471,11 @@ class ArtikelPage extends StatelessWidget {
       body: ListView.builder(
         itemCount: 5,
         itemBuilder: (_, i) => ListTile(
-          leading: const SizedBox(width: 50, height: 50, child: DecoratedBox(decoration: BoxDecoration(color: Colors.blue))),
+          leading: const SizedBox(
+            width: 50,
+            height: 50,
+            child: DecoratedBox(decoration: BoxDecoration(color: Colors.blue)),
+          ),
           title: Text("Headline ${i + 1}"),
           subtitle: const Text("Today • 3 min read"),
           onTap: () {
@@ -492,7 +490,6 @@ class ArtikelPage extends StatelessWidget {
   }
 }
 
-//// DETAIL 
 class DetailArtikel extends StatelessWidget {
   const DetailArtikel({super.key});
 
@@ -503,10 +500,7 @@ class DetailArtikel extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 200,
-              color: Colors.blue,
-            ),
+            Container(height: 200, color: Colors.blue),
             const Padding(
               padding: EdgeInsets.all(16),
               child: Text(
@@ -516,9 +510,7 @@ class DetailArtikel extends StatelessWidget {
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Isi artikel panjang lorem ipsum...",
-              ),
+              child: Text("Isi artikel panjang lorem ipsum..."),
             ),
           ],
         ),
@@ -527,7 +519,6 @@ class DetailArtikel extends StatelessWidget {
   }
 }
 
-//// SETTINGS 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -545,14 +536,8 @@ class SettingsPage extends StatelessWidget {
             leading: Icon(Icons.data_usage),
             title: Text("Akses Dataset"),
           ),
-          ListTile(
-            leading: Icon(Icons.star),
-            title: Text("Beri Rating"),
-          ),
-          ListTile(
-            leading: Icon(Icons.web),
-            title: Text("Website"),
-          ),
+          ListTile(leading: Icon(Icons.star), title: Text("Beri Rating")),
+          ListTile(leading: Icon(Icons.web), title: Text("Website")),
         ],
       ),
     );

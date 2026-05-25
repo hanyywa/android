@@ -1,1 +1,5 @@
-flutter 3.41.9-stable
+flutter 3.41.9
+gradle 9.5.1
+java openjdk-26
+kotlin 2.3.21
+fluttergen 5.14.1

@@ -1,5 +1,12 @@
 package com.example.android
 
+import com.example.android.handlandmarker.HandLandmarkerPlugin
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
 
-class MainActivity : FlutterActivity()
+class MainActivity : FlutterActivity() {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        flutterEngine.plugins.add(HandLandmarkerPlugin())
+        super.configureFlutterEngine(flutterEngine)
+    }
+}
