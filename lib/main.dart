@@ -128,7 +128,7 @@ const List<Artikel> artikelList = [
   ),
 ];
 
-// MAIN PAGE — Bottom Navigation
+// MAIN PAGE
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -246,7 +246,7 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               child: Row(
                 children: [
-                  const Icon(Icons.sign_language, color: C.primary, size: 28),
+                  Image.asset('assets/images/logo.png', width: 32, height: 32),
                   const SizedBox(width: 8),
                   const Text(
                     'Teman Isyarat',
@@ -349,48 +349,21 @@ class _HeroCard extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: 20,
-              left: 20,
-              child: SizedBox(
-                width: 110,
-                height: 110,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: C.onPrimary.withOpacity(0.4), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    const Icon(Icons.sign_language,
-                        color: C.onPrimary, size: 56),
-                    Positioned(
-                      bottom: 4,
-                      right: 4,
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: C.onPrimary.withOpacity(0.18),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.camera_alt,
-                            color: C.onPrimary, size: 18),
-                      ),
-                    ),
-                  ],
-                ),
+              top: 16,
+              left: 16,
+              child: Image.asset(
+                'assets/images/hand_camera.jpeg',
+                width: 130,
+                height: 130,
+                fit: BoxFit.contain,
               ),
             ),
+
             Positioned(
               bottom: 20,
-              left: 20,
               right: 20,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
                     'Terjemahkan',
@@ -400,6 +373,7 @@ class _HeroCard extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
+                  const SizedBox(width: 10),
                   Container(
                     width: 36,
                     height: 36,
@@ -407,8 +381,11 @@ class _HeroCard extends StatelessWidget {
                       color: C.onPrimary.withOpacity(0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.arrow_forward,
-                        color: C.onPrimary, size: 20),
+                    child: const Icon(
+                      Icons.arrow_forward,
+                      color: C.onPrimary,
+                      size: 20,
+                    ),
                   ),
                 ],
               ),
@@ -420,7 +397,7 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-// ARTIKEL ITEM — dipakai di Home & ArtikelListPage
+// ARTIKEL ITEM 
 class _ArtikelItem extends StatelessWidget {
   final Artikel artikel;
   final VoidCallback onTap;
@@ -436,27 +413,13 @@ class _ArtikelItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: C.primary,
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: C.onPrimary.withOpacity(0.4), width: 1.5),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  const Icon(Icons.sign_language,
-                      color: C.onPrimary, size: 38),
-                ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: Image.asset(
+                'assets/images/artikel_placeholder.jpeg',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(width: 14),
@@ -508,7 +471,7 @@ class _ArtikelItem extends StatelessWidget {
   }
 }
 
-// TRANSLATE PAGE — Kamera penuh + hasil deteksi
+// TRANSLATE PAGE 
 class TranslatePage extends StatefulWidget {
   const TranslatePage({super.key});
 
@@ -730,7 +693,7 @@ class _TranslatePageState extends State<TranslatePage> {
   }
 }
 
-// BELAJAR PAGE — Grid isyarat + search
+// BELAJAR PAGE 
 class BelajarPage extends StatefulWidget {
   const BelajarPage({super.key});
 
@@ -871,7 +834,7 @@ class _BelajarPageState extends State<BelajarPage> {
   }
 }
 
-// DETAIL ISYARAT PAGE — foto besar + nama + kode
+// DETAIL ISYARAT PAGE
 class DetailIsyaratPage extends StatelessWidget {
   final IsyaratItem isyarat;
 
@@ -1022,28 +985,13 @@ class DetailArtikelPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: C.primary,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: C.onPrimary.withOpacity(0.35),
-                                  width: 2),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          const Icon(Icons.sign_language,
-                              color: C.onPrimary, size: 80),
-                        ],
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        'assets/images/artikel_placeholder.jpeg',
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(height: 20),
