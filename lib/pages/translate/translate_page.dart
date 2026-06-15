@@ -79,7 +79,10 @@ class _TranslatePageState extends State<TranslatePage> {
                     child: Row(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.arrow_back, color: Colors.white),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
                           onPressed: () => Navigator.pop(context),
                         ),
                         const Text(
@@ -113,9 +116,7 @@ class _TranslatePageState extends State<TranslatePage> {
             ],
           ),
         ),
-        Expanded(
-          child: _buildResultPanel(),
-        ),
+        Expanded(child: _buildResultPanel()),
       ],
     );
   }
@@ -132,9 +133,9 @@ class _TranslatePageState extends State<TranslatePage> {
           color: Colors.black.withValues(alpha: 0.65),
           borderRadius: BorderRadius.circular(12),
         ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             Text(
               displayWords[0].toUpperCase(),
               style: const TextStyle(
@@ -276,11 +277,11 @@ class _TranslatePageState extends State<TranslatePage> {
   }
 
   Widget _buildBufferBar() {
-    final fillRatio = (_controller.bufferCount / 125.0).clamp(0.0, 1.0);
-    final offsetRatio = _controller.bufferCount >= 125
-        ? (_controller.writeOffset / 125.0).clamp(0.0, 1.0)
+    final fillRatio = (_controller.bufferCount / 110.0).clamp(0.0, 1.0);
+    final offsetRatio = _controller.bufferCount >= 110
+        ? (_controller.writeOffset / 110.0).clamp(0.0, 1.0)
         : fillRatio;
-    final wrapped = _controller.bufferCount >= 125;
+    final wrapped = _controller.bufferCount >= 110;
 
     return Padding(
       padding: const EdgeInsets.only(top: 12),
@@ -337,7 +338,7 @@ class _TranslatePageState extends State<TranslatePage> {
                   ),
                 ),
               Text(
-                'Frame ${_controller.totalFrames}  ›  Offset ${_controller.writeOffset}  ›  Buffer ${_controller.bufferCount}/125',
+                'Frame ${_controller.totalFrames}  ›  Offset ${_controller.writeOffset}  ›  Buffer ${_controller.bufferCount}/110',
                 style: const TextStyle(color: Colors.white38, fontSize: 10),
               ),
             ],
