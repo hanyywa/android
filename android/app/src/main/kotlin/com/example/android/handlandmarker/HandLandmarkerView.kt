@@ -158,11 +158,10 @@ class HandLandmarkerView(
 
     private fun stopCamera(result: MethodChannel.Result) {
         try {
-            handLandmarkerHelper?.shutdown()
-            cameraProvider?.unbindAll()
             isStarted = false
             overlayView.clear()
             handLandmarkerHelper?.clear()
+            cameraProvider?.unbindAll()
             resetBuffer()
             result.success(true)
         } catch (e: Exception) {
