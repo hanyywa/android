@@ -59,10 +59,12 @@ class HandLandmarkerHelper(
     fun clear() {
         shutdown()
         pendingFrames.clear()
-        handLandmarker?.close()
+        val hl = handLandmarker
         handLandmarker = null
-        poseLandmarker?.close()
+        hl?.close()
+        val pl = poseLandmarker
         poseLandmarker = null
+        pl?.close()
     }
 
     fun isClosed(): Boolean = handLandmarker == null && poseLandmarker == null
@@ -195,6 +197,7 @@ class HandLandmarkerHelper(
             imageWidth = rotatedBitmap.width
         )
 
+        if (isShutdown) return
         handLandmarker?.detectAsync(mpImage, frameTime)
         poseLandmarker?.detectAsync(mpImage, frameTime)
     }
