@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../constants.dart';
 import 'translate_controller.dart';
 import 'widgets/scanning_dots.dart';
 
@@ -33,7 +34,7 @@ class _TranslatePageState extends State<TranslatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.black, body: _buildBody());
+    return Scaffold(backgroundColor: C.primary, body: _buildBody());
   }
 
   Widget _buildBody() {
@@ -42,11 +43,15 @@ class _TranslatePageState extends State<TranslatePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.camera_alt, size: 64, color: Colors.grey),
+            Icon(
+              Icons.camera_alt,
+              size: 64,
+              color: C.onPrimary.withValues(alpha: 0.54),
+            ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Izin kamera diperlukan',
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(color: C.onPrimary, fontSize: 18),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -81,14 +86,14 @@ class _TranslatePageState extends State<TranslatePage> {
                         IconButton(
                           icon: const Icon(
                             Icons.arrow_back,
-                            color: Colors.white,
+                            color: C.onPrimary,
                           ),
                           onPressed: () => Navigator.pop(context),
                         ),
                         const Text(
                           'Terjemahkan Isyarat',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: C.onPrimary,
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -97,7 +102,7 @@ class _TranslatePageState extends State<TranslatePage> {
                         IconButton(
                           icon: const Icon(
                             Icons.flip_camera_android,
-                            color: Colors.white,
+                            color: C.onPrimary,
                           ),
                           onPressed: _controller.switchCamera,
                         ),
@@ -106,13 +111,13 @@ class _TranslatePageState extends State<TranslatePage> {
                   ),
                 ),
               ),
-              if (_controller.bufferReady)
-                Positioned(
-                  bottom: 16,
-                  left: 16,
-                  right: 16,
-                  child: _buildSubtitleOverlay(),
-                ),
+              // if (_controller.bufferReady)
+              //   Positioned(
+              //     bottom: 16,
+              //     left: 16,
+              //     right: 16,
+              //     child: _buildSubtitleOverlay(),
+              //   ),
             ],
           ),
         ),
@@ -139,7 +144,7 @@ class _TranslatePageState extends State<TranslatePage> {
             Text(
               displayWords[0].toUpperCase(),
               style: const TextStyle(
-                color: Colors.white,
+                color: C.onPrimary,
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
@@ -149,7 +154,7 @@ class _TranslatePageState extends State<TranslatePage> {
               Text(
                 displayWords.skip(1).join(' · '),
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.5),
+                  color: C.onPrimary.withValues(alpha: 0.5),
                   fontSize: 14,
                 ),
                 maxLines: 1,
@@ -167,21 +172,24 @@ class _TranslatePageState extends State<TranslatePage> {
         color: Colors.black.withValues(alpha: 0.65),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
+          const SizedBox(
             width: 16,
             height: 16,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              color: Colors.white54,
+              color: C.onPrimary,
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Text(
             'Memindai...',
-            style: TextStyle(color: Colors.white54, fontSize: 14),
+            style: TextStyle(
+              color: C.onPrimary.withValues(alpha: 0.54),
+              fontSize: 14,
+            ),
           ),
         ],
       ),
@@ -192,7 +200,7 @@ class _TranslatePageState extends State<TranslatePage> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Color(0xFF1A1A2E),
+        color: C.primary,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
@@ -210,24 +218,31 @@ class _TranslatePageState extends State<TranslatePage> {
               ],
             )
           else if (!_controller.modelLoaded)
-            const Column(
+            Column(
               children: [
-                CircularProgressIndicator(color: Colors.blue),
-                SizedBox(height: 12),
+                const CircularProgressIndicator(color: C.onPrimary),
+                const SizedBox(height: 12),
                 Text(
                   'Memuat model...',
-                  style: TextStyle(color: Colors.white70),
+                  style: TextStyle(color: C.onPrimary.withValues(alpha: 0.7)),
                 ),
               ],
             )
           else if (!_controller.hasLandmarks)
-            const Column(
+            Column(
               children: [
-                Icon(Icons.pan_tool, color: Colors.white38, size: 32),
-                SizedBox(height: 8),
+                Icon(
+                  Icons.pan_tool,
+                  color: C.onPrimary.withValues(alpha: 0.54),
+                  size: 32,
+                ),
+                const SizedBox(height: 8),
                 Text(
                   'Tidak ada tangan terdeteksi',
-                  style: TextStyle(color: Colors.white38, fontSize: 14),
+                  style: TextStyle(
+                    color: C.onPrimary.withValues(alpha: 0.54),
+                    fontSize: 14,
+                  ),
                 ),
               ],
             )
@@ -236,13 +251,13 @@ class _TranslatePageState extends State<TranslatePage> {
               children: [
                 LinearProgressIndicator(
                   value: _controller.bufferCount / 30,
-                  color: Colors.blue,
-                  backgroundColor: Colors.grey.shade800,
+                  color: C.onPrimary,
+                  backgroundColor: C.onPrimary.withValues(alpha: 0.2),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'Mengumpulkan frame... ${_controller.bufferCount}/30',
-                  style: const TextStyle(color: Colors.white70),
+                  style: TextStyle(color: C.onPrimary.withValues(alpha: 0.7)),
                 ),
               ],
             )
@@ -252,20 +267,12 @@ class _TranslatePageState extends State<TranslatePage> {
                 Text(
                   _controller.currentPrediction!.toUpperCase(),
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: C.onPrimary,
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
-                Container(
-                  height: 4,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
               ],
             )
           else
@@ -298,14 +305,14 @@ class _TranslatePageState extends State<TranslatePage> {
                     Container(
                       width: totalWidth,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade800,
+                        color: C.onPrimary.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(3),
                       ),
                     ),
                     Container(
                       width: totalWidth * fillRatio,
                       decoration: BoxDecoration(
-                        color: Colors.blue.shade300,
+                        color: C.onPrimary,
                         borderRadius: BorderRadius.circular(3),
                       ),
                     ),
@@ -315,7 +322,7 @@ class _TranslatePageState extends State<TranslatePage> {
                         child: Container(
                           width: 2,
                           height: 6,
-                          color: Colors.white,
+                          color: C.onPrimary,
                         ),
                       ),
                   ],
@@ -339,7 +346,10 @@ class _TranslatePageState extends State<TranslatePage> {
                 ),
               Text(
                 'Frame ${_controller.totalFrames}  ›  Offset ${_controller.writeOffset}  ›  Buffer ${_controller.bufferCount}/110',
-                style: const TextStyle(color: Colors.white38, fontSize: 10),
+                style: TextStyle(
+                  color: C.onPrimary.withValues(alpha: 0.54),
+                  fontSize: 10,
+                ),
               ),
             ],
           ),
@@ -353,9 +363,12 @@ class _TranslatePageState extends State<TranslatePage> {
       children: [
         const ScanningDots(),
         const SizedBox(height: 8),
-        const Text(
+        Text(
           'Pindai gerakan...',
-          style: TextStyle(color: Colors.white54, fontSize: 16),
+          style: TextStyle(
+            color: C.onPrimary.withValues(alpha: 0.7),
+            fontSize: 16,
+          ),
         ),
       ],
     );

@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'constants.dart';
 import 'pages/translate/translate_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
   runApp(const MyApp());
-}
-
-class C {
-  static const Color primary    = Color(0xFF0000CC);
-  static const Color bg         = Color(0xFFFFFFFF);
-  static const Color bgLight    = Color(0xFFF2F2F2);
-  static const Color text       = Color(0xFF111111);
-  static const Color textSub    = Color(0xFF555555);
-  static const Color textMuted  = Color(0xFF888888);
-  static const Color onPrimary  = Color(0xFFFFFFFF);
-  static const Color divider    = Color(0xFFE0E0E0);
-  static const Color navInactive= Color(0xFF888888);
-  static const Color primaryLink= Color(0xFF0000CC);
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +26,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Roboto',
         scaffoldBackgroundColor: C.bgLight,
-        colorScheme: ColorScheme.fromSeed(seedColor: C.primary, primary: C.primary),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: C.primary,
+          primary: C.primary,
+        ),
       ),
       home: const MainPage(),
     );
@@ -58,12 +51,42 @@ class IsyaratItem {
 }
 
 const List<IsyaratItem> isyaratList = [
-  IsyaratItem(number: 1,  kode: 'Saya',  label: 'Saya',  placeholderColor: Color(0xFF9E9E9E)),
-  IsyaratItem(number: 2,  kode: 'Kamu',  label: 'Kamu',  placeholderColor: Color(0xFF9E9E9E)),
-  IsyaratItem(number: 3,  kode: 'Teman', label: 'Teman', placeholderColor: Color(0xFF9E9E9E)),
-  IsyaratItem(number: 4,  kode: 'Apel',  label: 'Apel',  placeholderColor: Color(0xFF9E9E9E)),
-  IsyaratItem(number: 5,  kode: 'Besok', label: 'Besok', placeholderColor: Color(0xFF9E9E9E)),
-  IsyaratItem(number: 6,  kode: 'Ayah',  label: 'Ayah',  placeholderColor: Color(0xFF9E9E9E)),
+  IsyaratItem(
+    number: 1,
+    kode: 'Saya',
+    label: 'Saya',
+    placeholderColor: Color(0xFF9E9E9E),
+  ),
+  IsyaratItem(
+    number: 2,
+    kode: 'Kamu',
+    label: 'Kamu',
+    placeholderColor: Color(0xFF9E9E9E),
+  ),
+  IsyaratItem(
+    number: 3,
+    kode: 'Teman',
+    label: 'Teman',
+    placeholderColor: Color(0xFF9E9E9E),
+  ),
+  IsyaratItem(
+    number: 4,
+    kode: 'Apel',
+    label: 'Apel',
+    placeholderColor: Color(0xFF9E9E9E),
+  ),
+  IsyaratItem(
+    number: 5,
+    kode: 'Besok',
+    label: 'Besok',
+    placeholderColor: Color(0xFF9E9E9E),
+  ),
+  IsyaratItem(
+    number: 6,
+    kode: 'Ayah',
+    label: 'Ayah',
+    placeholderColor: Color(0xFF9E9E9E),
+  ),
 ];
 
 class Artikel {
@@ -101,7 +124,8 @@ const List<Artikel> artikelList = [
   ),
   Artikel(
     title: 'Mengenal BISINDO Solo',
-    description: 'Varian dari BISINDO yang dibentuk oleh komunitas tuli Surakarta',
+    description:
+        'Varian dari BISINDO yang dibentuk oleh komunitas tuli Surakarta',
     date: 'Today',
     readTime: '3 min read',
     body:
@@ -173,7 +197,12 @@ class _BottomNav extends StatelessWidget {
           child: Row(
             children: [
               _navItem(0, Icons.home_outlined, Icons.home, 'Home'),
-              _navItem(1, Icons.video_camera_front_outlined, Icons.video_camera_front, 'Belajar'),
+              _navItem(
+                1,
+                Icons.video_camera_front_outlined,
+                Icons.video_camera_front,
+                'Belajar',
+              ),
               _navItem(2, Icons.article_outlined, Icons.article, 'Artikel'),
             ],
           ),
@@ -253,8 +282,10 @@ class HomePage extends StatelessWidget {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const SettingsPage())),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SettingsPage()),
+                    ),
                     child: const Icon(Icons.menu, color: C.text, size: 26),
                   ),
                 ],
@@ -267,12 +298,16 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 4),
-                    _HeroCard(onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const TranslatePage()),
-                      );
-                    }),
+                    _HeroCard(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const TranslatePage(),
+                          ),
+                        );
+                      },
+                    ),
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -289,8 +324,11 @@ class HomePage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () => onSwitchTab(2),
-                            child: const Icon(Icons.arrow_forward,
-                                color: C.primary, size: 22),
+                            child: const Icon(
+                              Icons.arrow_forward,
+                              color: C.primary,
+                              size: 22,
+                            ),
                           ),
                         ],
                       ),
@@ -306,12 +344,19 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ...artikelList.take(3).map((a) => _ArtikelItem(
-                          artikel: a,
-                          onTap: () => Navigator.push(context,
+                    ...artikelList
+                        .take(3)
+                        .map(
+                          (a) => _ArtikelItem(
+                            artikel: a,
+                            onTap: () => Navigator.push(
+                              context,
                               MaterialPageRoute(
-                                  builder: (_) => DetailArtikelPage(artikel: a))),
-                        )),
+                                builder: (_) => DetailArtikelPage(artikel: a),
+                              ),
+                            ),
+                          ),
+                        ),
                     const SizedBox(height: 24),
                   ],
                 ),
@@ -347,8 +392,8 @@ class _HeroCard extends StatelessWidget {
               left: 16,
               child: SvgPicture.asset(
                 'assets/hand_camera.svg',
-                width: 130,
-                height: 130,
+                width: 100,
+                height: 100,
                 fit: BoxFit.contain,
               ),
             ),
@@ -363,7 +408,7 @@ class _HeroCard extends StatelessWidget {
                     'Terjemahkan',
                     style: TextStyle(
                       color: C.onPrimary,
-                      fontSize: 26,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -415,11 +460,13 @@ class _ArtikelItem extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(14),
-                child: SvgPicture.asset(
-                  'assets/illust_m.svg',
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SvgPicture.asset(
+                    'assets/illust_m.svg',
+                    width: 80,
+                    height: 80,
+                  ),
                 ),
               ),
             ),
@@ -456,10 +503,7 @@ class _ArtikelItem extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       '${artikel.date} • ${artikel.readTime}',
-                      style: const TextStyle(
-                        color: C.textMuted,
-                        fontSize: 12,
-                      ),
+                      style: const TextStyle(color: C.textMuted, fontSize: 12),
                     ),
                   ],
                 ),
@@ -483,9 +527,11 @@ class _BelajarPageState extends State<BelajarPage> {
   String _query = '';
 
   List<IsyaratItem> get filtered => isyaratList
-      .where((e) =>
-          e.label.toLowerCase().contains(_query.toLowerCase()) ||
-          e.kode.toLowerCase().contains(_query.toLowerCase()))
+      .where(
+        (e) =>
+            e.label.toLowerCase().contains(_query.toLowerCase()) ||
+            e.kode.toLowerCase().contains(_query.toLowerCase()),
+      )
       .toList();
 
   @override
@@ -513,12 +559,13 @@ class _BelajarPageState extends State<BelajarPage> {
                     Expanded(
                       child: TextField(
                         onChanged: (v) => setState(() => _query = v),
-                        style: const TextStyle(
-                            fontSize: 15, color: C.text),
+                        style: const TextStyle(fontSize: 15, color: C.text),
                         decoration: const InputDecoration(
                           hintText: 'Cari kata',
                           hintStyle: TextStyle(
-                              color: C.textMuted, fontSize: 15),
+                            color: C.textMuted,
+                            fontSize: 15,
+                          ),
                           border: InputBorder.none,
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
@@ -537,10 +584,11 @@ class _BelajarPageState extends State<BelajarPage> {
             Expanded(
               child: GridView.builder(
                 physics: const BouncingScrollPhysics(),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 2,
                   crossAxisSpacing: 8,
@@ -553,8 +601,7 @@ class _BelajarPageState extends State<BelajarPage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) =>
-                            DetailIsyaratPage(isyarat: item),
+                        builder: (_) => DetailIsyaratPage(isyarat: item),
                       ),
                     ),
                     child: Column(
@@ -568,8 +615,11 @@ class _BelajarPageState extends State<BelajarPage> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Center(
-                              child: Icon(Icons.sign_language,
-                                  color: Color(0xFF757575), size: 48),
+                              child: Icon(
+                                Icons.sign_language,
+                                color: Color(0xFF757575),
+                                size: 48,
+                              ),
                             ),
                           ),
                         ),
@@ -577,8 +627,7 @@ class _BelajarPageState extends State<BelajarPage> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8),
                           child: Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 '#${item.number} - ${item.kode}',
@@ -624,13 +673,11 @@ class DetailIsyaratPage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  icon:
-                      const Icon(Icons.arrow_back, color: C.text, size: 24),
+                  icon: const Icon(Icons.arrow_back, color: C.text, size: 24),
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
@@ -649,8 +696,11 @@ class DetailIsyaratPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: const Center(
-                        child: Icon(Icons.sign_language,
-                            color: Color(0xFF757575), size: 100),
+                        child: Icon(
+                          Icons.sign_language,
+                          color: Color(0xFF757575),
+                          size: 100,
+                        ),
                       ),
                     ),
                   ),
@@ -715,8 +765,7 @@ class ArtikelListPage extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) =>
-                    DetailArtikelPage(artikel: artikelList[i]),
+                builder: (_) => DetailArtikelPage(artikel: artikelList[i]),
               ),
             ),
           ),
@@ -739,13 +788,11 @@ class DetailArtikelPage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: C.text, size: 24),
+                  icon: const Icon(Icons.arrow_back, color: C.text, size: 24),
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
@@ -754,8 +801,7 @@ class DetailArtikelPage extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding:
-                    const EdgeInsets.fromLTRB(16, 0, 16, 32),
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -768,11 +814,13 @@ class DetailArtikelPage extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: SvgPicture.asset(
-                          'assets/illust_m.svg',
-                          width: double.infinity,
-                          height: 200,
-                          fit: BoxFit.cover,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SvgPicture.asset(
+                            'assets/illust_m.svg',
+                            width: 160,
+                            height: 160,
+                          ),
                         ),
                       ),
                     ),
@@ -862,7 +910,10 @@ class SettingsPage extends StatelessWidget {
         title: const Text(
           'Pengaturan',
           style: TextStyle(
-              color: C.text, fontSize: 22, fontWeight: FontWeight.w600),
+            color: C.text,
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         backgroundColor: C.bg,
         elevation: 0,
@@ -878,17 +929,12 @@ class SettingsPage extends StatelessWidget {
       body: ListView(
         children: const [
           _SettingTile(
-              icon: Icons.privacy_tip_outlined,
-              label: 'Kebijakan Privasi'),
-          _SettingTile(
-              icon: Icons.storage_outlined,
-              label: 'Akses ke Dataset'),
-          _SettingTile(
-              icon: Icons.star_border,
-              label: 'Beri Rating'),
-          _SettingTile(
-              icon: Icons.language,
-              label: 'Website'),
+            icon: Icons.privacy_tip_outlined,
+            label: 'Kebijakan Privasi',
+          ),
+          _SettingTile(icon: Icons.storage_outlined, label: 'Akses ke Dataset'),
+          _SettingTile(icon: Icons.star_border, label: 'Beri Rating'),
+          _SettingTile(icon: Icons.language, label: 'Website'),
         ],
       ),
     );
@@ -904,8 +950,7 @@ class _SettingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       leading: Icon(icon, color: C.text, size: 24),
       title: Text(
         label,
